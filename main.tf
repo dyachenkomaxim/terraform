@@ -1,4 +1,21 @@
+version: '3.9'
 
+services:
+  my-wordpress:
+    image: wordpress
+    ports:
+      - "80:8080"
+  my-mysql:
+    image: mysql
+    ports:
+      - "3306:33060"
+    environment: 
+        MYSQL_ROOT_PASSWORD: 12345678
+    volumes:
+      - db-data:/var/lib/mysql
+ 
+volumes:
+  db-data:
 
 
 resource "azurerm_linux_virtual_machine" "testvm" { 
