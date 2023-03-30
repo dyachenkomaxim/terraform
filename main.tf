@@ -90,3 +90,42 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
+
+11111
+terraform {
+  required_providers {
+      virtualbox = {
+        source = "terra-farm/virtualbox"
+        version = "0.2.2-alpha.1"
+      }
+  }
+}
+
+resource "virtualbox_vm" "cp" {
+  count   = 3
+  name    = format("cp%02d", count.index + 1)
+  image   = "https://vagrantcloud.com/geerlingguy/boxes/ubuntu1804/versions/1.0.4/providers/virtualbox.box"
+  cpus    = 2
+  memory = "2.0 gib"
+  user_data = "test"
+  network_adapter {
+      type = "bridged"
+      host_interface = "en6: USB 10/100/1000 LAN"
+  }
+}
+
+resource "virtualbox_vm" "worker" {
+  count = 3
+  name = format("worker%02d", count.index + 1)
+    image   = "https://vagrantcloud.com/geerlingguy/boxes/ubuntu1804/versions/1.0.4/providers/virtualbox.box"
+  cpus    = 2
+  memory = "2.0 gib"
+  user_data = "test"
+  network_adapter {
+      type = "bridged"
+      host_interface = "en6: USB 10/100/1000 LAN"
+  }
+}
+
+
